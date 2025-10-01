@@ -34,7 +34,7 @@ namespace Automation_OOP
             int counter = 1;
             foreach (var item in automation.GetSendMessages(automation.CurrentUser))
             {
-                Console.WriteLine($"[{counter}] - Receiver: [{item.Receiver.FirstName} {item.Receiver.LastName}] - Date/Time: [{item.Date}] - Subjet: [{item.Subject}]");
+                Console.WriteLine($"[{counter}] - Receiver: [{(item.Receiver != null ? item.Receiver.FirstName + " " + item.Receiver.LastName : item.Type + " Group")}] - Date/Time: [{item.Date}] - Subjet: [{item.Subject}]");
                 counter++;
             }
             while (true)
