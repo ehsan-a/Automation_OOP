@@ -8,9 +8,10 @@ namespace Automation_OOP
 {
     internal class Message
     {
-        public DateTime Date { get; set; }
-        public string Subject { get; set; }
-        public string Body { get; set; }
+        public DateTime Date { get; private set; }
+        public string Subject { get; private set; }
+        public string Body { get; private set; }
+        public bool Read { get; private set; }
         public User Sender { get; private set; }
         public User Receiver { get; private set; }
         public User.type Type { get; private set; }
@@ -21,6 +22,7 @@ namespace Automation_OOP
             Body = body;
             Sender = sender;
             Receiver = receiver;
+            Read = false;
         }
         public Message(DateTime date, string subject, string body, User sender, User.type type)
         {
@@ -29,6 +31,10 @@ namespace Automation_OOP
             Body = body;
             Sender = sender;
             Type = type;
+        }
+        public void ReadMessage()
+        {
+            Read = true;
         }
     }
 }

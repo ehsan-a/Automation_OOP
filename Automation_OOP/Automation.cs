@@ -8,11 +8,11 @@ namespace Automation_OOP
 {
     internal class Automation
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
+        public string Title { get; private set; }
+        public string Description { get; private set; }
         public List<Message> Messages { get; private set; }
         public List<User> Users { get; private set; }
-        public User CurrentUser { get; set; }
+        public User CurrentUser { get; private set; }
         public Automation(string title, string description)
         {
             Title = title;
@@ -20,46 +20,21 @@ namespace Automation_OOP
             Messages = new List<Message>();
             Users = new List<User>();
         }
-        public override string ToString()
-        {
-            return $"{Title} Automation System - Version[1]";
-        }
-        public void SendMessage(Message message)
-        {
-            Messages.Add(message);
-        }
-        public void AddUsers(User user)
-        {
-            Users.Add(user);
-        }
-        public IEnumerable<Message> GetSendMessages(User user)
-        {
-            return from message in Messages
-                   where message.Sender == user
-                   select message;
-        }
-        public IEnumerable<Message> GetReceiveMessages(User user)
-        {
-            return from Message in Messages
-                   where Message.Receiver == user || Message.Type == user.UserType
-                   select Message;
-        }
-        public IEnumerable<User> GetUsers()
-        {
-            return Users.Where(user => user != CurrentUser);
-        }
+        public override string ToString() => $"{Title} Automation System - Version[1]";
+        public void SendMessage(Message message) => Messages.Add(message);
+        public void AddUsers(User user) => Users.Add(user);
+        public IEnumerable<Message> GetSendMessages(User user) => Messages.Where(m => m.Sender == user);
+        public IEnumerable<Message> GetReceiveMessages(User user) => Messages.Where(m => m.Receiver == user || m.Type == user.UserType);
+        public IEnumerable<User> GetUsers() => Users.Where(user => user != CurrentUser);
         public bool Login(string username, string password)
         {
-            var query = from user in Users where user.Username == username && user.Password == password select user;
-            if (query.Count() > 0)
+            var query = Users.FirstOrDefault(u => u.Username.Equals(username) && u.Password.Equals(password));
+            if (query != null)
             {
-                CurrentUser = query.ToList()[0];
+                CurrentUser = query;
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            else return false;
         }
     }
 }

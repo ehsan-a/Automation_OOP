@@ -19,7 +19,7 @@ Responsive.Login(automation);
 bool appRun = true;
 while (appRun)
 {
-    Console.Write("[1]SentMeassages / [2]ReceivedMessages / [3]SendMessage(User) / [4]SendMessage(Group) / [5]Exit -- Choose: ");
+    Console.Write("[1]SentMeassages / [2]ReceivedMessages / [3]SendMessage(User) / [4]SendMessage(Group) / [5] Switch Acc / [6]Exit -- Choose: ");
     switch (Console.ReadLine())
     {
         case "1":
@@ -35,6 +35,9 @@ while (appRun)
             Responsive.SendMessageGroup(automation);
             break;
         case "5":
+            Responsive.Login(automation);
+            break;
+        case "6":
             appRun = false;
             break;
     }

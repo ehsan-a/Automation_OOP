@@ -14,7 +14,7 @@ namespace Automation_OOP
             while (true)
             {
                 Console.Write("Username: ");
-                string username = Console.ReadLine();
+                string username = Console.ReadLine().ToLower();
                 Console.Write("Password: ");
                 string password = Console.ReadLine();
                 if (automation.Login(username, password))
@@ -34,7 +34,7 @@ namespace Automation_OOP
             int counter = 1;
             foreach (var item in automation.GetSendMessages(automation.CurrentUser))
             {
-                Console.WriteLine($"[{counter}] - Receiver: [{(item.Receiver != null ? item.Receiver.FirstName + " " + item.Receiver.LastName : item.Type + " Group")}] - Date/Time: [{item.Date}] - Subjet: [{item.Subject}]");
+                Console.WriteLine($"[{counter}] - Receiver: [{(item.Receiver != null ? item.Receiver.FirstName + " " + item.Receiver.LastName : item.Type + " Group")}] - Date/Time: [{item.Date}] - Subjet: [{item.Subject}] - Read: [{(item.Receiver == null ? " - " : item.Read)}]");
                 counter++;
             }
             while (true)
@@ -53,7 +53,7 @@ namespace Automation_OOP
                     continue;
                 }
                 var item = automation.GetSendMessages(automation.CurrentUser).ToList()[index - 1];
-                Console.WriteLine($"Receiver: [{item.Receiver.FirstName} {item.Receiver.LastName}] - Date/Time: [{item.Date}] - Subjet: [{item.Subject}]");
+                Console.WriteLine($"Receiver: [{(item.Receiver != null ? item.Receiver.FirstName + " " + item.Receiver.LastName : item.Type + " Group")}] - Date/Time: [{item.Date}] - Subjet: [{item.Subject}] - Read: [{(item.Receiver == null ? " - " : item.Read)}]");
                 Console.WriteLine($"Message: [{item.Body}]");
             }
         }
@@ -83,6 +83,7 @@ namespace Automation_OOP
                 var item = automation.GetReceiveMessages(automation.CurrentUser).ToList()[int.Parse(input) - 1];
                 Console.WriteLine($"Sender: [{item.Sender.FirstName} {item.Sender.LastName}] - Receiver: [{(item.Receiver != null ? item.Receiver.FirstName + " " + item.Receiver.LastName : item.Type + " Group")}] - Date/Time: [{item.Date}] - Subjet: [{item.Subject}]");
                 Console.WriteLine($"Message: [{item.Body}]");
+                item.ReadMessage();
             }
         }
         public static void SendMessageUser(Automation automation)
